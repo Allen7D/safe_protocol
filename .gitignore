@@ -1,0 +1,9 @@
+.idea
+.DS_Store
+.vscode/
+node_modules/
+bower_components/
+dist/
+build/
+server.py
+client.py
