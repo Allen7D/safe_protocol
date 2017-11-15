@@ -27,6 +27,7 @@ gulp
 
 6. 浏览器输入http://localhost:3000/
 
-##后端项目
+## 后端项目
 1. 全局安装flask和pymongo
+
 pip install flask pymongo
