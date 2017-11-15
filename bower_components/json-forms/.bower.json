@@ -1,0 +1,37 @@
+{
+  "name": "json-forms",
+  "homepage": "http://brutusin.org/json-forms/",
+  "authors": [
+    "Ignacio del Valle Alles <idelvall@brutusin.org> (http://brutusin.org)"
+  ],
+  "description": "Brutusin json-forms is a JSON Schema to HTML form generator, supporting dynamic subschemas (on the fly resolution). Extensible and customizable library with zero dependencies. Bootstrap add-on provided. See live demo at http://brutusin.org/json-forms",
+  "main": "dist/brutusin-json-forms.min.js",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "form",
+    "json",
+    "json-schema",
+    "schema"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "1.6.3",
+  "_release": "1.6.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.6.3",
+    "commit": "d0fa10a7c364134c9e81911dd60a9e1f80d47385"
+  },
+  "_source": "https://github.com/brutusin/json-forms.git",
+  "_target": "^1.6.3",
+  "_originalSource": "https://github.com/brutusin/json-forms.git",
+  "_direct": true
+}
