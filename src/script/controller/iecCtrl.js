@@ -432,6 +432,8 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
         }
     });
 
+    //设置权限发送权限
+    //显示，您无权限修改
     $("#btn3").click(function () {
         var data = bf.getData();//JSON.stringify(bf.getData(), null, 4);
         if (bf.validate()) {

@@ -3,12 +3,12 @@
     <form name="form" style="padding:20px;">
         <div class="form-group">
             <label for="username">用户名：</label>
-            <input id="username" validator="required,username" ng-model="user.username" class="inneed" type="text"
+            <input id="username" validator="required,username" ng-model="username" class="inneed" type="text"
                    placeholder="Username">
         </div>
         <div class="form-group">
             <label for="password">密码：</label>
-            <input id="password" validator="required,password" ng-model="user.password" class="inneed" type="password"
+            <input id="password" validator="required,password" ng-model="password" class="inneed" type="password"
                    placeholder="Password">
         </div>
         <div class="checkbox">
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
             <button class="btn btn-primary btn-block" validation-submit="form" ng-click="submit()">登录</button>
-            <button class="btn btn-primary btn-block" ng-click="reset(from)">重置</button>
+            <button class="btn btn-primary btn-block" ng-click="reset()">重置</button>
             <p class="error">用户名或密码错误</p>
         </div>
     </form>

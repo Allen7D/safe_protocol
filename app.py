@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template, session, request, url_for, jsonify
 from flask_socketio import SocketIO, emit
+from flask_cors import *
 # from gevent import monkey; monkey.patch_socket()
 # import gevent
 import os
@@ -14,6 +15,7 @@ from functools import wraps
 async_mode = "threading"
 
 app = Flask(__name__, static_folder="build", static_url_path="", template_folder="")
+# app.debug = True
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 json_path = "./src/data/iec104_server.json"
@@ -56,6 +58,8 @@ users = [
         "level" : 1 
     }
 ]
+
+CORS(app, supports_credentials=True)
 
 def deal_with_alert_data(d):
     d1 = d.split("|")
@@ -108,7 +112,7 @@ def login_required(f):
 def get_users():
     return jsonify({'users': users})
 
-@app.route('/api/v1.0/user', methods=['POST', 'GET'])
+@app.route('/api/v1.0/user', methods=['POST'])
 def get_user():
     username = request.args['username']
     user = user_db.find_one({'username': username})
@@ -117,7 +121,6 @@ def get_user():
         'password': user['password'],
         'level': user['level']
     }
-    print(user)
     return jsonify({'users': user})
 
 
