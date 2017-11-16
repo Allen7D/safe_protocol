@@ -375,17 +375,17 @@ angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
             }
         }
     }
-
     var BrutusinForms = brutusin["json-forms"];
     var bf = BrutusinForms.create(schema);
     var container = document.getElementById("modbus_container");
-
+    var init_flag = undefined;
 
     // var socket = io(location.protocol + '//' + document.domain + ':' + location.port);
     var socket = io(location.protocol + '//' + document.domain + ':' + 5000);
     socket.on('connect', function () {
         socket.emit('my_event', {data: 'I\'m connected!'});
     });
+
     var _index = 1;
     socket.on("alert", function (message) {
         var divs = '<tr class="danger">\n<td class="col-check"><input type="checkbox" class="form-check-input"></td>\n' +
@@ -394,15 +394,17 @@ angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
             '<td>' + message["Message"] + '</td>\n<td>  ' + message["data"] + '</td>\n</tr>';
         $("#modbus_monitor").append(divs);
     });
+
     socket.on("setting", function (message) {
         alert(message);
     });
+
     socket.on("init", function (data) {
         var json_data = JSON.parse(data["json"]);
         // console.log(data["json"]);
         if (typeof(init_flag) == "undefined") {
             bf.render(container, json_data);
-            var init_flag = 1;
+            init_flag = 1;
         }
     });
 

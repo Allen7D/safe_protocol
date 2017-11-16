@@ -398,6 +398,7 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
     var BrutusinForms = brutusin["json-forms"];
     var bf = BrutusinForms.create(schema);
     var container = document.getElementById("iec_container");
+    var init_flag = undefined;
 
     var socket = io(location.protocol + '//' + document.domain + ':' + 5000);
     socket.on('connect', function () {
@@ -413,13 +414,14 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
         $("#iec_monitor").append(divs);
     });
     socket.on("setting", function (message) {
+        //接收前端的@socketio.on("setting")
         alert(message);
     });
     socket.on("init", function (data) {
         var json_data = JSON.parse(data["json"]);
         if (typeof(init_flag) == "undefined") {
             bf.render(container, json_data);
-            var init_flag = 1;
+            init_flag = 1;
         }
     });
 
@@ -437,6 +439,7 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
     $("#btn3").click(function () {
         var data = bf.getData();//JSON.stringify(bf.getData(), null, 4);
         if (bf.validate()) {
+            //向后端发送setting，由于@socketio.on("setting")接收
             socket.emit("setting", {"json": JSON.stringify(data, null, 4)});
         }
     });

@@ -133,12 +133,12 @@ def index():
 def get_users():
     return jsonify({'users': users})
 
-@app.route('/api/v1.0/user', methods=['POST'])
+@app.route('/api/v1.0/user', methods=['POST', 'GET'])
 def get_user():
     username = request.args['username']
     password = request.args['password']
     user = user_db.find_one({'username': username})
-    if password == user['password'] :
+    if user and user['password'] == password:
         user = {
             'username': user['username'],
             'password': user['password'],
@@ -154,27 +154,9 @@ def get_user():
 
         return render_template('login.html', error='Invalid username/password')
 
-@app.route("/check", methods=['POST', 'GET'])
-def check():
-    print('Terminal: login')
-    return render_template('./src/index.html')
-    # if request.method == 'POST':
-    #     username = request.args['username']
-    #     password = request.args['password']
-    #     # 验证登录
-    #     user = user_db.find_one({'username': username})
-
-
-    # #     else:
-    #         session['username'] = None
-    #         session['password'] = None
-    #         error = 'Invalid username/password'
-    #         return render_template('login.html', error=error)
-
 
 def deal_with_file(dst=json_dst):
     cmd = "cp " + json_path + " " + dst
-    # print(cmd)
     os.system(cmd)
 
 
@@ -189,16 +171,14 @@ def receive_json(data):
     except:
         socketio.emit("setting", "Failed!")
         print("Writing file error!")
-    # print(data)
 
 
 @socketio.on('connect')
 def test_connect():
-    print("Terminal: Client connected!")
     try:
         with open(json_path, "r") as f:
             d = f.read()
-            socketio.emit("init", {"json": d})
+            socketio.emit("init", {"json": d}) #向前端发送初始化init
     except:
         socketio.emit("init", {"json": "{}"})
         print("Loading file error!")
@@ -206,7 +186,7 @@ def test_connect():
 
 @socketio.on('disconnect')
 def test_disconnect():
-    print('Terminal: Client disconnected', request.sid)
+    print('Client disconnected', request.sid)
 
 
 if __name__ == '__main__':

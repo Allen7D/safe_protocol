@@ -1,0 +1,32 @@
+[
+    { 
+        "_id" : 1, 
+        "username" : "gushenxing", 
+        "password" : "gushenxingrocks!", 
+        "level" : 1 
+    },
+    { 
+        "_id" : 2, 
+        "username" : "panxiao", 
+        "password" : "panxiao", 
+        "level" : 0 
+    },
+    { 
+        "_id" : 3, 
+        "username" : "gaohuifang", 
+        "password" : "gaohuifang", 
+        "level" : 0 
+    },
+    { 
+        "_id" : 4, 
+        "username" : "cenliguang", 
+        "password" : "cenliguang", 
+        "level" : 0 
+    },
+    { 
+        "_id" : 5, 
+        "username" : "guyi", 
+        "password" : "guyi", 
+        "level" : 1 
+    }
+]
