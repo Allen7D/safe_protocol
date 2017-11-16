@@ -19,4 +19,5 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
         controller: 'modbusCtrl'
     });
     $urlRouterProvider.otherwise('/'); //默认跳转到「default」
+    $locationProvider.html5Mode(true).hashPrefix('');
 }])
