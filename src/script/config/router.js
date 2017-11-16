@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+angular.module('app').config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider,$locationProvider) {
     $stateProvider.state('default', {
         url: '/',
         templateUrl: 'view/main.html',
