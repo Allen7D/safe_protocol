@@ -107,26 +107,18 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# @app.route("/#/iec")
+# @login_required
+# def iec():
+#     return render_template('./src/view/iec.html', async_mode=socketio.async_mode)
 
-@app.route('/api/v1.0/users', methods=['GET'])
-def get_users():
-    return jsonify({'users': users})
-
-@app.route('/api/v1.0/user', methods=['POST'])
-def get_user():
-    username = request.args['username']
-    user = user_db.find_one({'username': username})
-    user = {
-        'username': user['username'],
-        'password': user['password'],
-        'level': user['level']
-    }
-    return jsonify({'users': user})
-
+# @app.route("/#/modbus")
+# @login_required
+# def modbus():
+#     return render_template('./src/view/modbus.html', async_mode=socketio.async_mode)
 
 @app.route("/")
 def index():
-    print('Terminal: index')
     return render_template('./src/index.html', async_mode=socketio.async_mode)
 
 # @app.route("/s", methods=['POST'])
@@ -137,6 +129,31 @@ def index():
 
 
 
+@app.route('/api/v1.0/users', methods=['GET'])
+def get_users():
+    return jsonify({'users': users})
+
+@app.route('/api/v1.0/user', methods=['POST'])
+def get_user():
+    username = request.args['username']
+    password = request.args['password']
+    user = user_db.find_one({'username': username})
+    if password == user['password'] :
+        user = {
+            'username': user['username'],
+            'password': user['password'],
+            'level': user['level']
+        }
+        session['username'] = user['username']
+        session['password'] = user['password']
+
+        return jsonify({'users': user}), 200
+    else :
+        session['username'] = None
+        session['password'] = None
+
+        return render_template('login.html', error='Invalid username/password')
+
 @app.route("/check", methods=['POST', 'GET'])
 def check():
     print('Terminal: login')
@@ -146,15 +163,13 @@ def check():
     #     password = request.args['password']
     #     # 验证登录
     #     user = user_db.find_one({'username': username})
-    #     if request.args['password'] == password :
-    #         session['username'] = username
-    #         session['password'] = password
 
-    #     else:
+
+    # #     else:
     #         session['username'] = None
     #         session['password'] = None
     #         error = 'Invalid username/password'
-    #         # return render_template('login.html', error=error)
+    #         return render_template('login.html', error=error)
 
 
 def deal_with_file(dst=json_dst):
