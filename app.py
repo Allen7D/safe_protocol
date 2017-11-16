@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding:utf-8
 
 from flask import Flask, render_template, session, request, url_for, jsonify
 from flask_socketio import SocketIO, emit
@@ -24,40 +25,6 @@ json_dst = "./src/data/etc/safe/iec104.json"
 #datebase clinet
 client = MongoClient('localhost', 27017)
 user_db = client.safe_protocol.user
-
-# 测试参数
-users = [
-    { 
-        "_id" : 1, 
-        "username" : "gushenxing", 
-        "password" : "gushenxingrocks!", 
-        "level" : 1 
-    },
-    { 
-        "_id" : 2, 
-        "username" : "panxiao", 
-        "password" : "panxiao", 
-        "level" : 0 
-    },
-    { 
-        "_id" : 3, 
-        "username" : "gaohuifang", 
-        "password" : "gaohuifang", 
-        "level" : 0 
-    },
-    { 
-        "_id" : 4, 
-        "username" : "cenliguang", 
-        "password" : "cenliguang", 
-        "level" : 0 
-    },
-    { 
-        "_id" : 5, 
-        "username" : "guyi", 
-        "password" : "guyi", 
-        "level" : 1 
-    }
-]
 
 CORS(app, supports_credentials=True)
 
