@@ -400,11 +400,17 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
     var container = document.getElementById("iec_container");
     var init_flag = undefined;
 
-    var socket = io(location.protocol + '//' + document.domain + ':' + 5000, {type: 'iec'});
-    console.log(socket)
+    var socket = io(location.protocol + '//' + document.domain + ':' + 5000);
     socket.on('connect', function () {
+        console.log('----------connect----------');
         socket.emit('my_event', {data: 'I\'m connected!'});
     });
+
+    socket.on('reconnect', function () {
+        console.log('----------reconnect----------');
+        socket.emit('needinit', {type:'iec'});
+    });
+
     var _index = 1;
     socket.on("alert", function (message) {
         // console.log(message);

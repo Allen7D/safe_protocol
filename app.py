@@ -81,15 +81,13 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# @app.route("/#/iec")
-# @login_required
-# def iec():
-#     return render_template('./src/view/iec.html', async_mode=socketio.async_mode)
+@app.route("/iec")
+def iec():
+    return render_template('./src/view/iec.html', async_mode=socketio.async_mode)
 
-# @app.route("/#/modbus")
-# @login_required
-# def modbus():
-#     return render_template('./src/view/modbus.html', async_mode=socketio.async_mode)
+@app.route("/modbus")
+def modbus():
+    return render_template('./src/view/modbus.html', async_mode=socketio.async_mode)
 
 @app.route("/")
 def index():
@@ -136,16 +134,6 @@ def deal_with_file(dst=json_dst):
 
 @socketio.on("setting")
 def receive_json(data):
-    # global json_path
-    # global json_dst
-
-    # if data['type'] == 'modbus':
-    #     json_path = modbus_json_path
-    #     json_dst = modbus_json_dst
-    # else:
-    #     json_path = iec_json_path
-    #     json_dst = iec_json_dst
-
     try:
         with open(json_path, "w") as f:
             f.write(data["json"])
@@ -156,9 +144,22 @@ def receive_json(data):
         socketio.emit("setting", "Failed!")
         print("Writing file error!")
 
-
 @socketio.on('connect')
 def connect():
+    socketio.emit("reconnect")
+
+@socketio.on('needinit')
+def needinit(data):
+    global json_path
+    global json_dst
+    print(data['type'])
+    if data['type'] == 'iec':
+        json_path = iec_json_path
+        json_dst = iec_json_dst
+    else:
+        json_path = modbus_json_path
+        json_dst = modbus_json_dst
+
     try:
         with open(json_path, "r") as f:
             d = f.read()

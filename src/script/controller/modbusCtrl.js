@@ -383,8 +383,15 @@ angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
     var socket = io(location.protocol + '//' + document.domain + ':' + 5000);
 
     socket.on('connect', function () {
-        socket.emit('my_event', {data: 'I\'m connected!', "type": 'modbus'});
+        console.log('----------connect----------');
+        socket.emit('my_event', {data: 'I\'m connected!'});
     });
+
+    socket.on('reconnect', function () {
+        console.log('----------reconnect----------');
+        socket.emit('needinit', {type:'modbus'});
+    });
+
 
     var _index = 1;
     socket.on("alert", function (message) {
@@ -421,7 +428,7 @@ angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
     $("#btn3").click(function () {
         var data = bf.getData();
         if (bf.validate()) {
-            socket.emit("setting", {"json": JSON.stringify(data, null, 4), "type": 'modbus'});
+            socket.emit("setting", {"json": JSON.stringify(data, null, 4)});
         }
     });
 }])
