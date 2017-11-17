@@ -19,7 +19,7 @@ curl  -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | 
 6. 浏览器输入http://localhost:3000/ 
 ## 后端项目
 1. 全局安装flask、pymongo、flask_socketio、flask_cors、<br>
-`pip install flask pymongo flask_socketio flask_cors`
+`pip install -r requirements.txt`
 2. 运行项目<br>/
 运行 `python app.py`
 

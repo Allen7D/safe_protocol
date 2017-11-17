@@ -2,7 +2,7 @@
 
 angular.module('app').config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider,$locationProvider) {
     $stateProvider.state('login', {
-        url: '/',
+        url: '/login',
         templateUrl: 'view/login.html',
         controller: 'loginCtrl'
     }).state('iec', {
@@ -14,6 +14,6 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider','$locationP
         templateUrl: 'view/modbus.html',
         controller: 'modbusCtrl'
     });
-    $urlRouterProvider.otherwise('/'); //默认跳转到「default」
-    $locationProvider.html5Mode(true).hashPrefix('');
+    $urlRouterProvider.otherwise('/login'); //默认跳转到「default」
+    // $locationProvider.html5Mode(true).hashPrefix('');
 }])
