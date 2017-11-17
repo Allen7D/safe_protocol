@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
-    console.log("modbusCtrl is run");
 
     var schema = {
         "$schema": "",
@@ -382,8 +381,9 @@ angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
 
     // var socket = io(location.protocol + '//' + document.domain + ':' + location.port);
     var socket = io(location.protocol + '//' + document.domain + ':' + 5000);
+
     socket.on('connect', function () {
-        socket.emit('my_event', {data: 'I\'m connected!'});
+        socket.emit('my_event', {data: 'I\'m connected!', "type": 'modbus'});
     });
 
     var _index = 1;
@@ -421,7 +421,7 @@ angular.module('app').controller("modbusCtrl", ["$scope", function ($scope) {
     $("#btn3").click(function () {
         var data = bf.getData();
         if (bf.validate()) {
-            socket.emit("setting", {"json": JSON.stringify(data, null, 4)});
+            socket.emit("setting", {"json": JSON.stringify(data, null, 4), "type": 'modbus'});
         }
     });
 }])

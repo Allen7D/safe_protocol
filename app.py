@@ -19,8 +19,15 @@ app = Flask(__name__, static_folder="build", static_url_path="", template_folder
 # app.debug = True
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
-json_path = "./src/data/iec104_server.json"
-json_dst = "./src/data/etc/safe/iec104.json"
+
+iec_json_path = "./build/data/iec104_server.json"
+iec_json_dst = "/etc/safe/iec104.json"
+
+modbus_json_path = "./build/data/modbus_server.json"
+modbus_json_dst = "/etc/safe/modbus.json"
+
+json_path = iec_json_path
+json_dst = iec_json_dst
 
 #datebase clinet
 client = MongoClient('localhost', 27017)
@@ -129,6 +136,16 @@ def deal_with_file(dst=json_dst):
 
 @socketio.on("setting")
 def receive_json(data):
+    # global json_path
+    # global json_dst
+
+    # if data['type'] == 'modbus':
+    #     json_path = modbus_json_path
+    #     json_dst = modbus_json_dst
+    # else:
+    #     json_path = iec_json_path
+    #     json_dst = iec_json_dst
+
     try:
         with open(json_path, "w") as f:
             f.write(data["json"])
@@ -141,7 +158,7 @@ def receive_json(data):
 
 
 @socketio.on('connect')
-def test_connect():
+def connect():
     try:
         with open(json_path, "r") as f:
             d = f.read()
@@ -152,7 +169,7 @@ def test_connect():
 
 
 @socketio.on('disconnect')
-def test_disconnect():
+def disconnect():
     print('Client disconnected', request.sid)
 
 
@@ -166,4 +183,4 @@ if __name__ == '__main__':
     t2.start()
     t1.join()
     t2.join()
-    
+

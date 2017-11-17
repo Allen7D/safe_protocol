@@ -400,7 +400,8 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
     var container = document.getElementById("iec_container");
     var init_flag = undefined;
 
-    var socket = io(location.protocol + '//' + document.domain + ':' + 5000);
+    var socket = io(location.protocol + '//' + document.domain + ':' + 5000, {type: 'iec'});
+    console.log(socket)
     socket.on('connect', function () {
         socket.emit('my_event', {data: 'I\'m connected!'});
     });
@@ -437,10 +438,10 @@ angular.module('app').controller("iecCtrl", ["$scope", function ($scope) {
     //设置权限发送权限
     //显示，您无权限修改
     $("#btn3").click(function () {
-        var data = bf.getData();//JSON.stringify(bf.getData(), null, 4);
+        var data = bf.getData();
         if (bf.validate()) {
             //向后端发送setting，由于@socketio.on("setting")接收
-            socket.emit("setting", {"json": JSON.stringify(data, null, 4)});
+            socket.emit("setting", {"json": JSON.stringify(data, null, 4), "type": 'iec'});
         }
     });
 }])

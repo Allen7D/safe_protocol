@@ -1,0 +1,24 @@
+{
+    "connection": {
+        "ip": "127.0.0.1",
+        "port": 8000
+    },
+    "function": [
+        {
+            "id": 1,
+            "default": true,
+            "excepts": [
+                {
+                    "start": {
+                        "hour": 16,
+                        "min": 18
+                    },
+                    "end": {
+                        "hour": 16,
+                        "min": 35
+                    }
+                }
+            ]
+        }
+    ]
+}
