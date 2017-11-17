@@ -1,12 +1,8 @@
 'use strict';
 
-angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    $stateProvider.state('default', {
+angular.module('app').config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider,$locationProvider) {
+    $stateProvider.state('login', {
         url: '/',
-        templateUrl: 'view/main.html',
-        controller: 'mainCtrl'
-    }).state('login', {
-        url: '/login',
         templateUrl: 'view/login.html',
         controller: 'loginCtrl'
     }).state('iec', {
@@ -19,4 +15,5 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', function($
         controller: 'modbusCtrl'
     });
     $urlRouterProvider.otherwise('/'); //默认跳转到「default」
+    $locationProvider.html5Mode(true).hashPrefix('');
 }])
